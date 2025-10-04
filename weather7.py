@@ -5,11 +5,11 @@ import requests
 import io
 import time
 
-# ---------------------- API KEYS ----------------------
+#API KEYS
 WEATHER_API_KEY = "06c921750b9a82d8f5d1294e1586276f"
-NASA_API_KEY = "DEMO_KEY"  # Replace with your NASA API key if available
+NASA_API_KEY = "DEMO_KEY"  
 
-# ---------------------- Functions ----------------------
+#Functions
 def get_location():
     try:
         ip_data = requests.get("https://ipinfo.io/").json()
@@ -56,7 +56,7 @@ def update_weather(event=None):
         messagebox.showerror("Error", "Could not detect location. Please enter a city.")
         return
 
-    # ---------------------- Current Weather ----------------------
+    #Current Weather 
     weather = fetch_weather(city)
     if not weather:
         return
@@ -78,11 +78,11 @@ def update_weather(event=None):
         f"Wind: {wind} m/s\nSunrise: {sunrise} | Sunset: {sunset}"
     ))
 
-    # ---------------------- 3-Day Forecast ----------------------
+    #3-Day Forecast 
     forecast = fetch_forecast(city)
     if forecast:
         for i in range(3):
-            day_data = forecast['list'][i*8]  # approximately every 24 hours
+            day_data = forecast['list'][i*8]  
             date_txt = day_data['dt_txt'].split()[0]
             temp_min = kelvin_to_celsius(day_data['main']['temp_min'])
             temp_max = kelvin_to_celsius(day_data['main']['temp_max'])
@@ -99,7 +99,7 @@ def update_weather(event=None):
 
             forecast_labels[i].config(text=f"{date_txt}\n{condition_day}\n{temp_min}°C/{temp_max}°C")
 
-    # ---------------------- NASA APOD ----------------------
+    #NASA APOD
     nasa_data = fetch_nasa_apod()
     if nasa_data and 'url' in nasa_data:
         try:
@@ -113,7 +113,7 @@ def update_weather(event=None):
             nasa_label.config(image='')
             nasa_title.config(text='')
 
-# ---------------------- GUI ----------------------
+# GUI
 canvas = tk.Tk()
 canvas.geometry("750x800")
 canvas.title("NASA Space Weather App")
@@ -131,7 +131,7 @@ label1.pack(pady=10)
 label2 = tk.Label(canvas, font=f_small, justify="left")
 label2.pack(pady=10)
 
-# ---------------------- Forecast GUI ----------------------
+#Forecast GUI
 forecast_frame = tk.Frame(canvas)
 forecast_frame.pack(pady=10)
 forecast_icons = []
@@ -146,13 +146,14 @@ for i in range(3):
     forecast_icons.append(icon_label)
     forecast_labels.append(text_label)
 
-# ---------------------- NASA APOD ----------------------
+#NASA APOD
 nasa_title = tk.Label(canvas, font=f_small, wraplength=700)
 nasa_title.pack(pady=5)
 nasa_label = tk.Label(canvas)
 nasa_label.pack(pady=5)
 
-# ---------------------- Initialize ----------------------
+#Initialize
 update_weather()
 
 canvas.mainloop()
+
