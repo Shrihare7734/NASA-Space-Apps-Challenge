@@ -41,7 +41,7 @@ def fetch_forecast(city):
 
 def fetch_nasa_apod():
     try:
-        api = f"https://api.nasa.gov/planetary/apod?api_key={NASA_API_KEY}"
+        api = f"https://api.nasa.gov/planetary/apod?api_key={"DEMO_KEY"}"
         data = requests.get(api).json()
         return data
     except:
@@ -156,4 +156,5 @@ nasa_label.pack(pady=5)
 update_weather()
 
 canvas.mainloop()
+
 
